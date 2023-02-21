@@ -17,7 +17,22 @@ const postsController = {
 
     get_users: async (req, res) => {
         try{
-            const [rows, fields] = await pool.query("SELECT * from users INNER JOIN users_maison ON users.id = users_maison.id_users")
+            const [rows, fields] = await pool.query("SELECT id, utilisateur, nom, prenom, mail, date_creation, id_users, id_maison from users INNER JOIN users_maison ON users.id = users_maison.id_users")
+            res.json({
+                data: rows
+        })
+        } catch (error) {
+            console.log(error)
+            res.json({
+                status: "error"
+        })
+        }
+    },
+
+    get_connection: async (req, res) => {
+        try{
+            const { username, password } = req.params
+            const [rows, fields] = await pool.query("SELECT * from users where utilisateur = ? AND mdp = ?", [username, password])
             res.json({
                 data: rows
         })

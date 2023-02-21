@@ -8,7 +8,7 @@ const postsRouter = require('./routes/posts.router')
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 
-app.use("/api/v1/posts", postsRouter)
+app.use("/api/v1", postsRouter)
 
 const PORT = process.env.PORT || 3000
 
