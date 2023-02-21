@@ -101,8 +101,8 @@
               <span class="badge badge-sidebar-secondary">Special</span>
             </a>
 						<ul id="auth" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-							<li class="sidebar-item"><a class="sidebar-link" href="pages-sign-in.html">Sign In</a></li>
-							<li class="sidebar-item"><a class="sidebar-link" href="pages-sign-up.html">Sign Up</a></li>
+							<li class="sidebar-item"><a class="sidebar-link" href="/login">Sign In</a></li>
+							<li class="sidebar-item"><a class="sidebar-link" href="/sign-up">Sign Up</a></li>
 							<li class="sidebar-item"><a class="sidebar-link" href="pages-reset-password.html">Reset Password</a></li>
 						</ul>
 					</li>
