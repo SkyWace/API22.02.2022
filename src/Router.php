@@ -56,7 +56,12 @@ class Router {
         require $this->viewPath . DIRECTORY_SEPARATOR . $view . '.php';
         $content = ob_get_clean();
        
+        if($name === "login"){
             require $this->viewPath . DIRECTORY_SEPARATOR . 'layout/login.php';
+        }
+        else{
+            require $this->viewPath . DIRECTORY_SEPARATOR . 'layout/default.php';
+        }
         return $this;
     }
 

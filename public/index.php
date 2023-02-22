@@ -14,4 +14,8 @@ $router
     ->match('/login', 'auth/login', 'login')
     ->match('/', 'Cube2', 'first')
     ->match('/sign-up', 'auth/sign-up', 'sign-up')
+    ->match('/FirstTable', 'table/FirstTable', 'FirstTable')
+    ->match('/SecondTable', 'table/SecondTable', 'SecondTable')
+    ->match('/graph', 'table/graph', 'graphe')
+    ->match('/gpt', 'table/gpt', 'gpt')
     ->run();
