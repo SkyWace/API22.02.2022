@@ -12,7 +12,7 @@ router.post("/users/create", postsController.create)
 router.put("/users/:id", postsController.update)
 router.delete("/users/:id", postsController.delete_users)
 router.delete("/capteurs/:id", postsController.delete_capteurs)
-router.post("/capteurs", postsController.capteurs)
+router.post("/capteurs", postsController.create_capteurs)
 
 
 module.exports = router

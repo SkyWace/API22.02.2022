@@ -138,13 +138,13 @@ const postsController = {
         }
     },
     
-    }
-    capteurs: async (req, res) => {
+
+    create_capteurs: async (req, res) => {
         try{
-            const { id, type } = req.body
+            const { id_capteurs, information } = req.body
             // const sql = "insert into maison (nom, superficie) values (?,?)";
-            const sql = "INSERT INTO users SET date_information = ?, information = ?"
-            const [rows, fields] = await pool.query(sql, [type, id])
+            const sql = "INSERT INTO informations_capteurs SET id_capteurs = ?, information = ?, date_information=NOW()"
+            const [rows, fields] = await pool.query(sql, [information, id_capteurs])
             res.json({
                 data: rows
             }) 
@@ -154,6 +154,7 @@ const postsController = {
                 status: "error"
         })
         }
-    },
+    }
+}
 
 module.exports = postsController
