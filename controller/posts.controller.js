@@ -4,7 +4,7 @@ const postsController = {
     getAll: async (req, res) => {
         try{
             const {id_piece} = req.params
-            const [rows, fields] = await pool.query("SELECT date_information, valeur, type, informations_capteurs.id_capteur, capteurs.nom as nom_capteurs,capteurs.id_piece, piece.nom as nom_piece, superficie, type_capteurs.nom as type_capteurs, unité FROM informations_capteurs INNER JOIN capteurs ON informations_capteurs.id_capteur = capteurs.id INNER JOIN piece ON piece.id = capteurs.id_piece INNER JOIN type_capteurs ON capteurs.type = type_capteurs.id WHERE capteur.id_piece = ?" [id_piece])
+            const [rows, fields] = await pool.query("SELECT date_information, valeur, type, informations_capteurs.id_capteur, capteurs.nom as nom_capteurs ,capteurs.id_piece, piece.nom as nom_piece, superficie, type_capteurs.nom as type_capteurs, unité FROM informations_capteurs INNER JOIN capteurs ON informations_capteurs.id_capteur = capteurs.id INNER JOIN piece ON piece.id = capteurs.id_piece INNER JOIN type_capteurs ON capteurs.type = type_capteurs.id WHERE capteurs.id_piece = ?", [id_piece])
             res.json({
                 data: rows
         })
@@ -48,7 +48,7 @@ const postsController = {
     get_information: async (req, res) => {
         try{
             const {id_piece} = req.params
-            const [rows, fields] = await pool.query("SELECT ic.date_information, GROUP_CONCAT(ic1.valeur ORDER BY ic1.id_capteur SEPARATOR ', ') AS valeur_type_humidité, GROUP_CONCAT(ic2.valeur ORDER BY ic2.id_capteur SEPARATOR ', ') AS informations_type_température FROM informations_capteurs ic LEFT JOIN capteurs c1 ON ic.id_capteur = c1.id AND c1.type = 1 LEFT JOIN informations_capteurs ic1 ON ic1.id_capteur = c1.id AND ic.date_information = ic1.date_information LEFT JOIN capteurs c2 ON ic.id_capteur = c2.id AND c2.type = 2 LEFT JOIN informations_capteurs ic2 ON ic2.id_capteur = c2.id AND ic.date_information = ic2.date_information GROUP BY ic.date_information ORDER BY ic.date_information DESC LIMIT 1 WHERE capteur.id_piece = ?;" [id_piece])
+            const [rows, fields] = await pool.query("SELECT ic.date_information, GROUP_CONCAT(ic1.valeur ORDER BY ic1.id_capteur SEPARATOR ', ') AS valeur_type_humidité, GROUP_CONCAT(ic2.valeur ORDER BY ic2.id_capteur SEPARATOR ', ') AS informations_type_température FROM informations_capteurs ic LEFT JOIN capteurs c1 ON ic.id_capteur = c1.id AND c1.type = 1 LEFT JOIN informations_capteurs ic1 ON ic1.id_capteur = c1.id AND ic.date_information = ic1.date_information LEFT JOIN capteurs c2 ON ic.id_capteur = c2.id AND c2.type = 2 LEFT JOIN informations_capteurs ic2 ON ic2.id_capteur = c2.id AND ic.date_information = ic2.date_information GROUP BY ic.date_information ORDER BY ic.date_information DESC LIMIT 1 WHERE capteurs.id_piece = ?", [id_piece])
             res.json({
                 data: rows
         })
@@ -63,7 +63,7 @@ const postsController = {
     get_informations: async (req, res) => {
         try{
             const{id_piece} = req.params
-            const [rows, fields] = await pool.query("SELECT ic.date_information, GROUP_CONCAT(ic1.valeur ORDER BY ic1.id_capteur SEPARATOR ', ') AS informations_type_humidité, GROUP_CONCAT(ic2.valeur ORDER BY ic2.id_capteur SEPARATOR ', ') AS informations_type_température FROM informations_capteurs ic LEFT JOIN capteurs c1 ON ic.id_capteur = c1.id AND c1.type = 1 LEFT JOIN informations_capteurs ic1 ON ic1.id_capteur = c1.id AND ic.date_information = ic1.date_information LEFT JOIN capteurs c2 ON ic.id_capteur = c2.id AND c2.type = 2 LEFT JOIN informations_capteurs ic2 ON ic2.id_capteur = c2.id AND ic.date_information = ic2.date_information GROUP BY ic.date_information WHERE capteur.id_piece = ?" [id_piece])
+            const [rows, fields] = await pool.query("SELECT ic.date_information, GROUP_CONCAT(ic1.valeur ORDER BY ic1.id_capteur SEPARATOR ', ') AS informations_type_humidité, GROUP_CONCAT(ic2.valeur ORDER BY ic2.id_capteur SEPARATOR ', ') AS informations_type_température FROM informations_capteurs ic LEFT JOIN capteurs c1 ON ic.id_capteur = c1.id AND c1.type = 1 LEFT JOIN informations_capteurs ic1 ON ic1.id_capteur = c1.id AND ic.date_information = ic1.date_information LEFT JOIN capteurs c2 ON ic.id_capteur = c2.id AND c2.type = 2 LEFT JOIN informations_capteurs ic2 ON ic2.id_capteur = c2.id AND ic.date_information = ic2.date_information GROUP BY ic.date_information WHERE capteurs.id_piece = ?", [id_piece])
             res.json({
                 data: rows
         })
@@ -123,6 +123,25 @@ const postsController = {
         })
         }
     },
+
+    /*create_piece: async (req, res) => {
+        try{
+            const { nom, superficie } = req.body
+            // const sql = "insert into piece (nom, superficie) values (?,?)";
+            const sql = "INSERT INTO piece SET nom = ?, superficie = ?"
+            const [rows, fields] = await pool.query(sql, [nom, superficie])
+            const sql2 = "INSERT INTO capteurs SET nom = Capteur 1 AND nom = Capteur 2 WHERE piece.nom = id_piece"
+            const [rows2, fields2] = await pool.query(sql2, [nom, superficie])
+            res.json({
+                data: rows
+            }) 
+        } catch (error) {
+            console.log(error)
+            res.json({
+                status: "error"
+        })
+        }
+    },*/
 
     update: async (req, res) => {
         try{
