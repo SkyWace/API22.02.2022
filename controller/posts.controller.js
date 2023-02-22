@@ -91,6 +91,23 @@ const postsController = {
         }
     }, 
 
+    create_capteurs: async (req, res) => {
+        try{
+            const { id_capteurs, information } = req.body
+            // const sql = "insert into maison (nom, superficie) values (?,?)";
+            const sql = "INSERT INTO informations_capteurs SET id_capteur = ?, information = ?, date_information=NOW()"
+            const [rows, fields] = await pool.query(sql, [id_capteurs, information])
+            res.json({
+                data: rows
+            }) 
+        } catch (error) {
+            console.log(error)
+            res.json({
+                status: "error"
+        })
+        }
+    },
+
     update: async (req, res) => {
         try{
             const { utilisateur, mdp, nom, prenom, mail } = req.body
@@ -137,24 +154,6 @@ const postsController = {
         })
         }
     },
-    
-
-    create_capteurs: async (req, res) => {
-        try{
-            const { id_capteurs, information } = req.body
-            // const sql = "insert into maison (nom, superficie) values (?,?)";
-            const sql = "INSERT INTO informations_capteurs SET id_capteur = ?, information = ?, date_information=NOW()"
-            const [rows, fields] = await pool.query(sql, [information, id_capteurs])
-            res.json({
-                data: rows
-            }) 
-        } catch (error) {
-            console.log(error)
-            res.json({
-                status: "error"
-        })
-        }
-    }
 }
 
 module.exports = postsController
