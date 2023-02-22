@@ -5,7 +5,7 @@ const postsController = require("../controller/posts.controller")
 
 router.get("/capteurs/all", postsController.getAll)
 router.get("/users", postsController.get_users)
-router.get("/users/connection/:username&:password", postsController.get_connection)
+router.get("/users/connection/:username/:password", postsController.get_connection)
 router.get("/capteurs/:id", postsController.getById)
 router.get("/informations", postsController.get_informations)
 router.post("/users/create", postsController.create)
