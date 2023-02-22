@@ -143,7 +143,7 @@ const postsController = {
         try{
             const { id_capteurs, information } = req.body
             // const sql = "insert into maison (nom, superficie) values (?,?)";
-            const sql = "INSERT INTO informations_capteurs SET id_capteurs = ?, information = ?, date_information=NOW()"
+            const sql = "INSERT INTO informations_capteurs SET id_capteur = ?, information = ?, date_information=NOW()"
             const [rows, fields] = await pool.query(sql, [information, id_capteurs])
             res.json({
                 data: rows
