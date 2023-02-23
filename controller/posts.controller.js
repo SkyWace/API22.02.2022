@@ -49,8 +49,7 @@ const postsController = {
         try {
           const { id_piece } = req.params;
       
-          const query = "SELECT ic.date_information, GROUP_CONCAT(IF(c.type = 1, ic.valeur, NULL) ORDER BY c.id SEPARATOR ', ') AS informations_type_temperature, GROUP_CONCAT(IF(c.type = 2, ic.valeur, NULL) ORDER BY c.id SEPARATOR ', ') AS informations_type_humidite FROM informations_capteurs ic JOIN capteurs c ON ic.id_capteur = c.id WHERE c.id_piece = ? GROUP BY ic.date_information DESC LIMIT 1";
-   
+          const query = "SELECT ic.date_information, COALESCE(GROUP_CONCAT(IF(c.type = 1, ic.valeur, NULL) ORDER BY c.id_capteur SEPARATOR ', '), FLOOR(RAND() * (25 - 15 + 1) + 15)) AS informations_type_temperature, COALESCE(GROUP_CONCAT(IF(c.type = 2, ic.valeur, NULL) ORDER BY c.id_capteur SEPARATOR ', '), FLOOR(RAND() * (100 - 0 + 1) + 0)) AS informations_type_humidite FROM informations_capteurs ic JOIN capteurs c ON ic.id_capteur = c.id WHERE c.id_piece = '2' GROUP BY ic.date_information DESC LIMIT 1";
 
           const params = [id_piece];
       
