@@ -47,37 +47,28 @@ const postsController = {
 
     get_information: async (req, res) => {
         try {
-          const { id_piece } = req.params;
-      
-          const query = "SELECT ic.date_information, GROUP_CONCAT(IF(c.type = 1, ic.valeur, NULL) ORDER BY c.id SEPARATOR ', ') AS informations_type_temperature, GROUP_CONCAT(IF(c.type = 2, ic.valeur, NULL) ORDER BY c.id SEPARATOR ', ') AS informations_type_humidite FROM informations_capteurs ic JOIN capteurs c ON ic.id_capteur = c.id WHERE c.id_piece = ? GROUP BY ic.date_information DESC LIMIT 1";
-          
-          const params = [id_piece];
-      
-          const [rows, fields] = await pool.query(query, params);
-      
-          let informations_type_temperature = null;
-      
-          if (rows[0].informations_type_temperature) {
-            informations_type_temperature = rows[0].informations_type_temperature;
-          } else {
-            const random_temperature = Math.floor(Math.random() * (25 - 15 + 1) + 15);
-            informations_type_temperature = `${random_temperature},${random_temperature},${random_temperature}`;
-          }
-      
-          res.json({
-            data: {
-              informations_type_temperature,
-              informations_type_humidite: rows[0].informations_type_humidite || null,
-            },
-          });
+            const { id_piece } = req.params;
+    
+            const query = "SELECT ic.date_information, SUBSTRING_INDEX(GROUP_CONCAT(IF(c.type = 1, ic.valeur, NULL) ORDER BY c.id SEPARATOR ', '), ',', 1) AS informations_type_temperature, GROUP_CONCAT(IF(c.type = 2, ic.valeur, NULL) ORDER BY c.id SEPARATOR ', ') AS informations_type_humidite FROM informations_capteurs ic JOIN capteurs c ON ic.id_capteur = c.id WHERE c.id_piece = ? GROUP BY ic.date_information DESC LIMIT 1";
+    
+            const params = [id_piece];
+    
+            const [rows, fields] = await pool.query(query, params);
+    
+            res.json({
+                data: {
+                    informations_type_temperature: rows[0].informations_type_temperature || null,
+                    informations_type_humidite: rows[0].informations_type_humidite || null,
+                },
+            });
         } catch (error) {
-          console.log(error);
-          res.json({
-            status: "error",
-          });
+            console.log(error);
+            res.json({
+                status: "error",
+            });
         }
-      },
-      
+    },
+    
 
     get_informations: async (req, res) => {
         try{
