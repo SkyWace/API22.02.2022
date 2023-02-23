@@ -64,19 +64,19 @@ const postsController = {
             informations_type_temperature = `${random_temperature}`;
           }
 
-          let informations_type_humidite = null;
+          /*let informations_type_humidite = null;
       
           if (rows[0].informations_type_humidite) {
-            informations_type_humidte = rows[0].informations_type_humidite;
+            informations_type_humidite = rows[0].informations_type_humidite;
           } else {
             const random_humidite = Math.floor(Math.random() * (25 - 15 + 1) + 15);
             informations_type_humidite = `${random_humidite}`;
-          }
+          }*/
       
           res.json({
             data: {
               informations_type_temperature,
-              informations_type_humidite,
+              informations_type_humidite: rows[0].informations_type_humidite || null,
             },
           });
         } catch (error) {
