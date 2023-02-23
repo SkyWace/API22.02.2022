@@ -50,14 +50,14 @@ const postsController = {
           const { id_piece } = req.params;
     
           const tempQuery = "SELECT ic.date_information, GROUP_CONCAT(ic1.valeur ORDER BY ic1.id_capteur SEPARATOR ', ') AS informations_type_temperature, GROUP_CONCAT(ic2.valeur ORDER BY ic2.id_capteur SEPARATOR ', ') AS informations_type_humidite FROM informations_capteurs ic LEFT JOIN capteurs c1 ON ic.id_capteur = c1.id AND c1.type = 1 LEFT JOIN informations_capteurs ic1 ON ic1.id_capteur = c1.id AND ic.date_information = ic1.date_information LEFT JOIN capteurs c2 ON ic.id_capteur = c2.id AND c2.type = 2 LEFT JOIN informations_capteurs ic2 ON ic2.id_capteur = c2.id AND ic.date_information = ic2.date_information WHERE c1.id_piece = ? AND c2.id_piece = ? GROUP BY ic.date_information DESC LIMIT 1";
-          const tempParams = [id_piece, id_piece];
+          const queryParams = [id_piece, id_piece];
     
-          const [tempRows, tempFields] = await pool.query(tempQuery, tempParams);
+          const [rows, fields] = await pool.query(tempQuery, queryParams);
     
           res.json({
             data: {
-              informations_type_temperature: tempRows[0] ? tempRows[0].informations_type_temperature : null,
-              informations_type_humidite: tempRows[0] ? tempRows[0].informations_type_humidite : null,
+              informations_type_temperature: rows[0] ? rows[0].informations_type_temperature : null,
+              informations_type_humidite: rows[0] ? rows[0].informations_type_humidite : null,
             },
           });
         } catch (error) {
@@ -66,7 +66,8 @@ const postsController = {
             status: "error",
           });
         }
-      },
+    },
+    
     
       
     
