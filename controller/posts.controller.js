@@ -45,11 +45,11 @@ const postsController = {
         }
     },
 
-    get_informations: async (req, res) => {
+    get_information: async (req, res) => {
         try {
           const { id_piece } = req.params;
       
-          const query = "SELECT ic.date_information, GROUP_CONCAT(IF(c.type = 1, ic.valeur, NULL) ORDER BY c.id SEPARATOR ', ') AS informations_type_temperature, GROUP_CONCAT(IF(c.type = 2, ic.valeur, NULL) ORDER BY c.id SEPARATOR ', ') AS informations_type_humidite FROM informations_capteurs ic JOIN capteurs c ON ic.id_capteur = c.id WHERE c.id_piece = ? GROUP BY ic.date_information DESC";
+          const query = "SELECT ic.date_information, GROUP_CONCAT(IF(c.type = 1, ic.valeur, NULL) ORDER BY c.id SEPARATOR ', ') AS informations_type_temperature, GROUP_CONCAT(IF(c.type = 2, ic.valeur, NULL) ORDER BY c.id SEPARATOR ', ') AS informations_type_humidite FROM informations_capteurs ic JOIN capteurs c ON ic.id_capteur = c.id WHERE c.id_piece = ? GROUP BY ic.date_information DESC LIMIT 1";
           
           const params = [id_piece];
       
@@ -80,7 +80,7 @@ const postsController = {
       
     
 
-      get_information: async (req, res) => {
+      get_informations: async (req, res) => {
         try {
           const { id_piece } = req.params;
       
