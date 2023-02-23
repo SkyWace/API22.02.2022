@@ -49,9 +49,9 @@ const postsController = {
         try {
           const { id_piece } = req.params;
       
-          const query = ("SELECT ic.date_information, GROUP_CONCAT(ic1.valeur ORDER BY ic1.id_capteur SEPARATOR ', ') AS informations_type_humidité, GROUP_CONCAT(ic2.valeur ORDER BY ic2.id_capteur SEPARATOR ', ') AS informations_type_température FROM informations_capteurs ic LEFT JOIN capteurs c1 ON ic.id_capteur = c1.id AND c1.type = 1 LEFT JOIN informations_capteurs ic1 ON ic1.id_capteur = c1.id AND ic.date_information = ic1.date_information LEFT JOIN capteurs c2 ON ic.id_capteur = c2.id AND c2.type = 2 LEFT JOIN informations_capteurs ic2 ON ic2.id_capteur = c2.id AND ic.date_information = ic2.date_information WHERE c1.id_piece = ? GROUP BY ic.date_information DESC LIMIT 1", [id_piece]);
+          const query = "SELECT ic.date_information, GROUP_CONCAT(IF(c.type = 1, ic.valeur, NULL) ORDER BY c.id SEPARATOR ', ') AS informations_type_temperature, GROUP_CONCAT(IF(c.type = 2, ic.valeur, NULL) ORDER BY c.id SEPARATOR ', ') AS informations_type_humidite FROM informations_capteurs ic JOIN capteurs c ON ic.id_capteur = c.id WHERE c.id_piece = ? GROUP BY ic.date_information DESC LIMIT 1";
       
-          //const params = [id_piece];
+          const params = [id_piece];
       
           const [rows, fields] = await pool.query(query, params);
       
