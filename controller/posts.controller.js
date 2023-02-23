@@ -18,7 +18,7 @@ const postsController = {
 
     get_users: async (req, res) => {
         try{
-            const [rows, fields] = await pool.query("SELECT id, utilisateur, nom, prenom, mail, date_creation, id_users FROM users ")
+            const [rows, fields] = await pool.query("SELECT id, utilisateur, nom, prenom, mail, date_creation FROM users ")
             res.json({
                 data: rows
         })
