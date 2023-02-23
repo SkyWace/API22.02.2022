@@ -45,7 +45,7 @@ const postsController = {
         }
     },
 
-    get_information: async (req, res) => {
+    get_informations: async (req, res) => {
         try {
           const { id_piece } = req.params;
       
@@ -79,7 +79,7 @@ const postsController = {
       },      
     
 
-      get_informations: async (req, res) => {
+      get_information: async (req, res) => {
         try {
           const { id_piece } = req.params;
       
