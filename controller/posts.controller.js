@@ -57,8 +57,9 @@ const postsController = {
     
             res.json({
                 data: {
-                    informations_type_temperature: tempRows[0]?.informations_type_temperature || null,
-                    informations_type_humidité: humRows[0]?.informations_type_humidité || null
+                    informations_type_temperature: tempRows[0] ? tempRows[0].informations_type_temperature : null,
+                    informations_type_humidité : tempRows[0] ? tempRows[0].informations_type_humidité : null,
+
                 }
             });
         } catch (error) {
