@@ -66,7 +66,7 @@ const postsController = {
       
           res.json({
             data: {
-              informations_type_temperature,
+              informations_type_temperature : rows[0].informations_type_temperature || null,
               informations_type_humidite: rows[0].informations_type_humidite || null,
             },
           });
